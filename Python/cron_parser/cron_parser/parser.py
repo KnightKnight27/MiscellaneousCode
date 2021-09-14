@@ -59,7 +59,7 @@ class CronSchedule:
 
 def parse_minutes_field(input: str) -> List[int]:
     if input == "*":
-        return list(range(1,61))
+        return list(range(1, 61))
     elif "-" in input:
         start, end = input.split("-")
         return list(range(int(start), int(end) + 1))
