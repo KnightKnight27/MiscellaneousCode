@@ -57,54 +57,34 @@ class CronSchedule:
     command: str
 
 
-def parse_minutes_field(input: str) -> List[int]:
+def _parse_field(input: str, max_value: int):
     if input == "*":
-        return list(range(1, 61))
+        return list(range(1, max_value + 1))
     elif "-" in input:
         start, end = input.split("-")
         return list(range(int(start), int(end) + 1))
     else:
         return [int(input)]
+
+
+def parse_minutes_field(input: str) -> List[int]:
+    return _parse_field(input=input, max_value=60)
 
 
 def parse_hours_field(input: str) -> List[int]:
-    if input == "*":
-        return list(range(1, 25))
-    elif "-" in input:
-        start, end = input.split("-")
-        return list(range(int(start), int(end) + 1))
-    else:
-        return [int(input)]
+    return _parse_field(input=input, max_value=24)
 
 
 def parse_days_of_month_field(input: str) -> List[int]:
-    if input == "*":
-        return list(range(1, 32))
-    elif "-" in input:
-        start, end = input.split("-")
-        return list(range(int(start), int(end) + 1))
-    else:
-        return [int(input)]
+    return _parse_field(input=input, max_value=31)
 
 
 def parse_months_field(input: str) -> List[int]:
-    if input == "*":
-        return list(range(1, 13))
-    elif "-" in input:
-        start, end = input.split("-")
-        return list(range(int(start), int(end) + 1))
-    else:
-        return [int(input)]
+    return _parse_field(input=input, max_value=12)
 
 
 def parse_days_of_week_field(input: str) -> List[int]:
-    if input == "*":
-        return list(range(1, 8))
-    elif "-" in input:
-        start, end = input.split("-")
-        return list(range(int(start), int(end) + 1))
-    else:
-        return [int(input)]
+    return _parse_field(input=input, max_value=7)
 
 
 def parse_command_field(input: str) -> str:
@@ -147,4 +127,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Parse cron string and print out field values")
     parser.add_argument("cron_string", type=str, help="Input string in cron format")
     args = parser.parse_args()
-    parse_cron_string(args.cron_string)
+    schedule = parse_cron_string(args.cron_string)
+    print(schedule)
+
