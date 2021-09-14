@@ -56,6 +56,20 @@ class CronSchedule:
     days_of_week: List
     command: str
 
+    @staticmethod
+    def _list_to_str(the_list: List):
+        return " ".join([str(x) for x in the_list])
+
+    def __repr__(self):
+        return "\n".join([
+            f"{'minute':14} {self._list_to_str(self.minutes)}",
+            f"{'hour':14} {self._list_to_str(self.hours)}",
+            f"{'day of month':14} {self._list_to_str(self.days_of_month)}",
+            f"{'month':14} {self._list_to_str(self.months)}",
+            f"{'day of week':14} {self._list_to_str(self.days_of_week)}",
+            f"{'command':14} {self.command}",
+        ])
+
 
 def _parse_field(field: str, min_value: int, max_value: int):
     if field == "*":
