@@ -13,31 +13,36 @@ from cron_parser.parser import (
 def test_parse_minutes_field() -> None:
     assert parse_minutes_field(input="1") == [1]
     assert parse_minutes_field(input="1-5") == [1, 2, 3, 4, 5]
-    assert parse_minutes_field(input="*") == list(range(1, 61))
+    assert parse_minutes_field(input="*") == list(range(0, 60))
+    assert parse_minutes_field(input="*/10") == [0, 10, 20, 30, 40, 50]
 
 
 def test_parse_hours_field() -> None:
     assert parse_hours_field(input="1") == [1]
     assert parse_hours_field(input="1-5") == [1, 2, 3, 4, 5]
-    assert parse_hours_field(input="*") == list(range(1, 25))
+    assert parse_hours_field(input="*") == list(range(0, 24))
+    assert parse_hours_field(input="*/6") == [0, 6, 12, 18]
 
 
 def test_parse_days_of_months_field() -> None:
     assert parse_days_of_month_field(input="1") == [1]
     assert parse_days_of_month_field(input="1-5") == [1, 2, 3, 4, 5]
     assert parse_days_of_month_field(input="*") == list(range(1, 32))
+    assert parse_days_of_month_field(input="*/5") == [1, 6, 11, 16, 21, 26, 31]
 
 
 def test_parse_months_field() -> None:
     assert parse_months_field(input="1") == [1]
     assert parse_months_field(input="1-5") == [1, 2, 3, 4, 5]
     assert parse_months_field(input="*") == list(range(1, 13))
+    assert parse_months_field(input="*/3") == [1, 4, 7, 10]
 
 
 def test_parse_days_of_week_field() -> None:
     assert parse_days_of_week_field(input="1") == [1]
     assert parse_days_of_week_field(input="1-5") == [1, 2, 3, 4, 5]
     assert parse_days_of_week_field(input="*") == list(range(1, 8))
+    assert parse_days_of_week_field(input="*/2") == [1, 3, 5, 7]
 
 
 def test_parse_command_field() -> None:
@@ -74,8 +79,8 @@ def test_parse_cron_string_wildcards_for_all_values() -> None:
     assert parse_cron_string(
         cron_string="* * * * * /usr/bin/find"
     ) == CronSchedule(
-        minutes=list(range(1, 61)),
-        hours=list(range(1, 25)),
+        minutes=list(range(0, 60)),
+        hours=list(range(0, 24)),
         days_of_month=list(range(1, 32)),
         months=list(range(1, 13)),
         days_of_week=[1, 2, 3, 4, 5, 6, 7],

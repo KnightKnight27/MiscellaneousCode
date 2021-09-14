@@ -57,9 +57,12 @@ class CronSchedule:
     command: str
 
 
-def _parse_field(input: str, max_value: int):
+def _parse_field(input: str, min_value: int, max_value: int):
     if input == "*":
-        return list(range(1, max_value + 1))
+        return list(range(min_value, max_value + 1))
+    elif input.startswith("*/"):
+        step = int(input.split("/")[1])
+        return list(range(min_value, max_value + 1, step))
     elif "-" in input:
         start, end = input.split("-")
         return list(range(int(start), int(end) + 1))
@@ -68,23 +71,23 @@ def _parse_field(input: str, max_value: int):
 
 
 def parse_minutes_field(input: str) -> List[int]:
-    return _parse_field(input=input, max_value=60)
+    return _parse_field(input=input, min_value=0, max_value=59)
 
 
 def parse_hours_field(input: str) -> List[int]:
-    return _parse_field(input=input, max_value=24)
+    return _parse_field(input=input, min_value=0, max_value=23)
 
 
 def parse_days_of_month_field(input: str) -> List[int]:
-    return _parse_field(input=input, max_value=31)
+    return _parse_field(input=input, min_value=1, max_value=31)
 
 
 def parse_months_field(input: str) -> List[int]:
-    return _parse_field(input=input, max_value=12)
+    return _parse_field(input=input, min_value=1, max_value=12)
 
 
 def parse_days_of_week_field(input: str) -> List[int]:
-    return _parse_field(input=input, max_value=7)
+    return _parse_field(input=input, min_value=1, max_value=7)
 
 
 def parse_command_field(input: str) -> str:
