@@ -37,6 +37,8 @@ You should see your project reviewer as a new team member you are handing the pr
 over to. Provide everything you feel would be relevant for them to ramp up quickly, such as
 tests, a README and instructions for how to run your project in a clean OS X/Linux
 environment.
+
+*,- and maybe % for commands
 """
 
 import argparse
@@ -56,23 +58,53 @@ class CronSchedule:
 
 
 def parse_minutes_field(input: str) -> List[int]:
-    return [int(input)]
+    if input == "*":
+        return list(range(1,61))
+    elif "-" in input:
+        start, end = input.split("-")
+        return list(range(int(start), int(end) + 1))
+    else:
+        return [int(input)]
 
 
 def parse_hours_field(input: str) -> List[int]:
-    return [int(input)]
+    if input == "*":
+        return list(range(1, 25))
+    elif "-" in input:
+        start, end = input.split("-")
+        return list(range(int(start), int(end) + 1))
+    else:
+        return [int(input)]
 
 
 def parse_days_of_month_field(input: str) -> List[int]:
-    return [int(input)]
+    if input == "*":
+        return list(range(1, 32))
+    elif "-" in input:
+        start, end = input.split("-")
+        return list(range(int(start), int(end) + 1))
+    else:
+        return [int(input)]
 
 
 def parse_months_field(input: str) -> List[int]:
-    return [int(input)]
+    if input == "*":
+        return list(range(1, 13))
+    elif "-" in input:
+        start, end = input.split("-")
+        return list(range(int(start), int(end) + 1))
+    else:
+        return [int(input)]
 
 
 def parse_days_of_week_field(input: str) -> List[int]:
-    return [int(input)]
+    if input == "*":
+        return list(range(1, 8))
+    elif "-" in input:
+        start, end = input.split("-")
+        return list(range(int(start), int(end) + 1))
+    else:
+        return [int(input)]
 
 
 def parse_command_field(input: str) -> str:
