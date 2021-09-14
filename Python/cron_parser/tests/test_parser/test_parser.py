@@ -67,7 +67,7 @@ def test_parse_cron_string_single_value_for_all_time_fields() -> None:
     )
 
 
-def test_parse_cron_string_comma_separated_values_for_all_time_fields() -> None:
+def test_parse_cron_string_comma_separated_values_for_all_time_fields() -> None:  # noqa
     assert parse_cron_string(
         cron_string="15,16 0,1 1,2 4,5 5,6 /usr/bin/find"
     ) == CronSchedule(
