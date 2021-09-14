@@ -57,41 +57,43 @@ class CronSchedule:
     command: str
 
 
-def _parse_field(input: str, min_value: int, max_value: int):
-    if input == "*":
+def _parse_field(field: str, min_value: int, max_value: int):
+    if field == "*":
         return list(range(min_value, max_value + 1))
-    elif input.startswith("*/"):
-        step = int(input.split("/")[1])
+    elif field.startswith("*/"):
+        step = int(field.split("/")[1])
         return list(range(min_value, max_value + 1, step))
-    elif "-" in input:
-        start, end = input.split("-")
+    elif "-" in field:
+        start, end = field.split("-")
         return list(range(int(start), int(end) + 1))
+    elif "," in field:
+        return [int(x) for x in field.split(",")]
     else:
-        return [int(input)]
+        return [int(field)]
 
 
-def parse_minutes_field(input: str) -> List[int]:
-    return _parse_field(input=input, min_value=0, max_value=59)
+def parse_minutes_field(field: str) -> List[int]:
+    return _parse_field(field=field, min_value=0, max_value=59)
 
 
-def parse_hours_field(input: str) -> List[int]:
-    return _parse_field(input=input, min_value=0, max_value=23)
+def parse_hours_field(field: str) -> List[int]:
+    return _parse_field(field=field, min_value=0, max_value=23)
 
 
-def parse_days_of_month_field(input: str) -> List[int]:
-    return _parse_field(input=input, min_value=1, max_value=31)
+def parse_days_of_month_field(field: str) -> List[int]:
+    return _parse_field(field=field, min_value=1, max_value=31)
 
 
-def parse_months_field(input: str) -> List[int]:
-    return _parse_field(input=input, min_value=1, max_value=12)
+def parse_months_field(field: str) -> List[int]:
+    return _parse_field(field=field, min_value=1, max_value=12)
 
 
-def parse_days_of_week_field(input: str) -> List[int]:
-    return _parse_field(input=input, min_value=1, max_value=7)
+def parse_days_of_week_field(field: str) -> List[int]:
+    return _parse_field(field=field, min_value=1, max_value=7)
 
 
-def parse_command_field(input: str) -> str:
-    return input
+def parse_command_field(field: str) -> str:
+    return field
 
 
 def parse_cron_string(cron_string: str) -> CronSchedule:
