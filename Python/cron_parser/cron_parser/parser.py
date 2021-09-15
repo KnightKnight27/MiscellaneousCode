@@ -19,12 +19,12 @@ class CronSchedule:
 
     def __repr__(self):
         return "\n".join([
-            f"{'minute':14} {self._list_to_str(self.minutes)}",
-            f"{'hour':14} {self._list_to_str(self.hours)}",
-            f"{'day of month':14} {self._list_to_str(self.days_of_month)}",
-            f"{'month':14} {self._list_to_str(self.months)}",
-            f"{'day of week':14} {self._list_to_str(self.days_of_week)}",
-            f"{'command':14} {self.command}",
+            f"{'minute':14}{self._list_to_str(self.minutes)}",
+            f"{'hour':14}{self._list_to_str(self.hours)}",
+            f"{'day of month':14}{self._list_to_str(self.days_of_month)}",
+            f"{'month':14}{self._list_to_str(self.months)}",
+            f"{'day of week':14}{self._list_to_str(self.days_of_week)}",
+            f"{'command':14}{self.command}",
         ])
 
 

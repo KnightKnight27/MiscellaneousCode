@@ -104,3 +104,14 @@ def test_parse_cron_string_wildcards_for_all_time_fields() -> None:
         days_of_week=[1, 2, 3, 4, 5, 6, 7],
         command="/usr/bin/find",
     )
+
+
+def test_parse_cron_string_example_input_and_output_from_pdf() -> None:
+    assert str(parse_cron_string("*/15 0 1,15 * 1-5 /usr/bin/find")) == (
+        "minute        0 15 30 45\n"
+        "hour          0\n"
+        "day of month  1 15\n"
+        "month         1 2 3 4 5 6 7 8 9 10 11 12\n"
+        "day of week   1 2 3 4 5\n"
+        "command       /usr/bin/find"
+    )
